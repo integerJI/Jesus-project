@@ -1,0 +1,23 @@
+<!-- myProject/myMember/templates/signin.html -->
+
+<h1>signup</h1>
+
+<form method="POST" action="#">
+    {%csrf_token%}
+    <input type="text" name="user-username" placeholder="Login Id" maxlength="15">
+    <small>15자 이하 문자, 숫자 그리고 @/./+/-/_만 가능합니다.</small>
+    <br><br>
+    <input type="password" name="user-password1" placeholder="Password">
+    <small>비밀번호는 최소 8자 이상이어야 합니다.</small>
+    <br><br>
+    <input type="password" name="user-password2" placeholder="Confirm Password">
+    <small>비밀번호는 전부 숫자로 할 수 없습니다.</small>
+    <br><br>
+    <textarea id="id_profile-intro" rows="3" name="profile-intro" placeholder="About Me" maxlength="40"></textarea>
+    <small>40자 이하 문자만 가능합니다.</small>
+    <br><br>
+    <button type="submit">Sign Up</button>
+</form>
+<a href="{% url 'signin' %}">
+    <button type="submit">Go back</button>
+</a>
