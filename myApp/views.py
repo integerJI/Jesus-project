@@ -7,7 +7,6 @@ from .models import Save
 
 def index(request):
     saves = Save.objects.all().order_by('-id')
-    print(saves)
     return render(request, 'index.html', {'saves':saves})
 
 def save(request):

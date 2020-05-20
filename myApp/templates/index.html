@@ -6,10 +6,17 @@ user : {{user.username}}
 
 <br>
 <br>
-{{saves}}
+{% for save in saves.all %}
+{{ save.save_user }}
+ - 
+{{ save.save_date }}
+<br>
+{% endfor %}
 <br>
 <br>
 
+<!-- 1. 지금 글쓰면 인덱스 초기화 -->
+<!-- 2. 자기글만 보이게 -->
 
 
 <form action="{% url 'save' %}">
