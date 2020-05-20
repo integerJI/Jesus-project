@@ -1,3 +1,20 @@
 <!-- myProject/myApp/templates/index.html -->
 
 <h1>index</h1>
+
+user : {{user.username}}
+
+<br>
+<br>
+{{saves}}
+<br>
+<br>
+
+
+
+<form action="{% url 'save' %}">
+    <button type="submit">save</button>
+</form>
+
+<br>
+<a href="{% url 'signout'%}">logout</a>
