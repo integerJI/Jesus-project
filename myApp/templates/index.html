@@ -2,6 +2,14 @@
 
 <h1>index</h1>
 
+
+<form action="{% url 'save' %}">
+    <button type="submit">save</button>
+</form>
+
+<a href="{% url 'signout'%}">logout</a>
+<br>
+<br>
 user : {{user.username}}
 
 <br>
@@ -15,13 +23,6 @@ user : {{user.username}}
 <br>
 <br>
 
-<!-- 1. 지금 글쓰면 인덱스 초기화 -->
-<!-- 2. 자기글만 보이게 -->
+<!-- 1. 자기글만 보이게 -->
 
 
-<form action="{% url 'save' %}">
-    <button type="submit">save</button>
-</form>
-
-<br>
-<a href="{% url 'signout'%}">logout</a>

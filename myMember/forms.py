@@ -50,3 +50,18 @@ class LoginForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'password']
+
+
+class ProfileUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ['intro']
+
+        widgets = {
+            'intro': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+        labels = {
+            'intro': '인사말',
+        }

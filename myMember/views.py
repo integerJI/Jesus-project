@@ -12,8 +12,9 @@ from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
 from django.views import generic, View
 from django.contrib.auth.decorators import login_required
-from .forms import UserCreationMultiForm, ProfileForm
+from .forms import UserCreationMultiForm, ProfileForm, ProfileUpdateForm
 from .models import Profile
+from myApp.models import Save
 
 def signup(request):
     if request.method == 'POST':
@@ -51,3 +52,80 @@ class LogoutViews(LogoutView):
     # setting.py에 설정해준 값
     next_page = settings.LOGOUT_REDIRECT_URL
 signout = LogoutViews.as_view()
+
+
+@login_required
+def userinfo(request):
+    request_user = request.user
+    request_profile = Profile.objects.get(user=conn_user)
+
+    context = {
+        'id' : request_user.username,
+        'nick' : request_profile.nick,
+        'intro' : conn_profile.intro,
+    }
+
+    return render(request, 'mypage.html', context=context)
+
+#   유저페이지에서 자기글 조회 여기선 Save
+#   posts = Post.objects.all().filter(create_user=conn_user).order_by('-id')
+#   자기글 객체
+#   'posts' : posts,
+
+@login_required
+def user_select_info(request, writer):
+    select_profile = Profile.objects.get(nick=writer)
+    select_user = select_profile.user
+            
+    context = {
+        'id' : select_user.username,
+        'nick' : select_profile.nick,
+        'intro' : select_profile.intro,
+    }
+
+    return render(request, 'userpage.html', context=context)
+
+#   유저페이지에서 자기글 조회 여기선 Save
+#   posts = Post.objects.all().filter(create_user=conn_user).order_by('-id')
+#   자기글 객체
+#   'posts' : posts,
+
+class ProfileUpdateView(View): 
+    def get(self, request):
+        user = get_object_or_404(User, pk=request.user.pk) 
+
+        if hasattr(user, 'profile'):  
+            profile = user.profile
+            profile_form = ProfileUpdateForm(initial={
+                'nick': profile.nick,
+                'intro': profile.intro,
+            })
+        else:
+            profile_form = ProfileUpdateForm()
+
+        return render(request, 'profile_update.html', { "profile_form": profile_form, "profile": profile})
+
+    def post(self, request):
+        u = User.objects.get(id=request.user.pk)       
+
+        if hasattr(u, 'profile'):
+            profile = u.profile
+            profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=profile) 
+        else:
+            profile_form = ProfileUpdateForm(request.POST, request.FILES)
+
+        # Profile 폼
+        if profile_form.is_valid():
+            profile = profile_form.save(commit=False) 
+            profile.user = u
+            profile.save()
+
+            context = {
+                'id' : u.username,
+                'nick' : profile.nick,
+                'intro' : profile.intro,
+            }
+
+            return render(request, 'mypage.html', context=context)
+            
+        return redirect('mypage', pk=request.user.pk) 

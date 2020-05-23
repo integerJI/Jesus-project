@@ -1,6 +1,6 @@
 # myProject/myApp/views.py
 
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.models import User
 from django.utils import timezone
 from .models import Save
@@ -14,4 +14,4 @@ def save(request):
     save.save_user = User.objects.get(username = request.user.get_username())
     save.save_date = timezone.datetime.now()
     save.save()
-    return render(request, 'index.html')
+    return redirect(reverse('index'))
