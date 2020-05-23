@@ -1,0 +1,10 @@
+<h1>mypage</h1>
+{{ id }}
+<br>
+{% if intro %}
+{{ intro | linebreaksbr}}
+<br>
+{% else %}
+intro가 없슴
+{% endif %}
+<a href="{% url 'profile_update' %}">Profile Update</a>  

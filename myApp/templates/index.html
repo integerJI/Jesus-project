@@ -2,7 +2,6 @@
 
 <h1>index</h1>
 
-
 <form action="{% url 'save' %}">
     <button type="submit">save</button>
 </form>
@@ -11,6 +10,9 @@
 <br>
 <br>
 user : {{user.username}}
+<br>
+<br>
+<a href="{% url 'mypage' %}">My Profile</a>
 
 <br>
 <br>

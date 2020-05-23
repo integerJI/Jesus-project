@@ -57,12 +57,12 @@ signout = LogoutViews.as_view()
 @login_required
 def userinfo(request):
     request_user = request.user
-    request_profile = Profile.objects.get(user=conn_user)
+    request_profile = Profile.objects.get(user=request_user)
 
     context = {
         'id' : request_user.username,
         'nick' : request_profile.nick,
-        'intro' : conn_profile.intro,
+        'intro' : request_profile.intro,
     }
 
     return render(request, 'mypage.html', context=context)
@@ -72,18 +72,20 @@ def userinfo(request):
 #   자기글 객체
 #   'posts' : posts,
 
-@login_required
-def user_select_info(request, writer):
-    select_profile = Profile.objects.get(nick=writer)
-    select_user = select_profile.user
-            
-    context = {
-        'id' : select_user.username,
-        'nick' : select_profile.nick,
-        'intro' : select_profile.intro,
-    }
 
-    return render(request, 'userpage.html', context=context)
+# user page 인데... 이건 나중에 살릴듯
+# @login_required
+# def user_select_info(request, writer):
+#     select_profile = Profile.objects.get(nick=writer)
+#     select_user = select_profile.user
+            
+#     context = {
+#         'id' : select_user.username,
+#         'nick' : select_profile.nick,
+#         'intro' : select_profile.intro,
+#     }
+
+#     return render(request, 'userpage.html', context=context)
 
 #   유저페이지에서 자기글 조회 여기선 Save
 #   posts = Post.objects.all().filter(create_user=conn_user).order_by('-id')

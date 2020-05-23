@@ -1,0 +1,14 @@
+<!--myProject/templates/profile_update.html-->
+
+{{user.username}} 프로필 수정
+<form method="POST" enctype="multipart/form-data" action="">
+{%csrf_token%}
+<br>
+{{ profile_form.intro }}
+<br>
+<br>
+<br>
+<input type="submit" value="Update">
+<a href="{% url 'index' %}">
+<button type="button">Cancel</button>
+</a>
