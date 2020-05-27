@@ -4,7 +4,8 @@ from django.utils import timezone
 from .models import Save
 
 def index(request):
-    saves = Save.objects.all().filter(create_user=conn_user).order_by('-id')
+    request_user = request.user
+    saves = Save.objects.all().filter(save_user_id=request_user).order_by('-id')
     return render(request, 'index.html', {'saves':saves})
 
 def save(request):
