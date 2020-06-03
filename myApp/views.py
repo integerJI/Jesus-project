@@ -17,3 +17,10 @@ def save(request):
 
 def calender(request):
     return render(request, 'calender.html')
+
+
+# 정수 전용 페이지
+def dev(request):
+    request_user = request.user
+    saves = Save.objects.all().filter(save_user_id=request_user).order_by('-id')
+    return render(request, 'index.html', {'saves':saves})
