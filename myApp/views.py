@@ -23,4 +23,4 @@ def calender(request):
 def dev(request):
     request_user = request.user
     saves = Save.objects.all().filter(save_user_id=request_user).order_by('-id')
-    return render(request, 'index.html', {'saves':saves})
+    return render(request, 'dev.html', {'saves':saves})
