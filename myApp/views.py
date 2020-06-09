@@ -21,6 +21,4 @@ def calender(request):
 
 # 정수 전용 페이지
 def dev(request):
-    request_user = request.user
-    saves = Save.objects.all().filter(save_user_id=request_user).order_by('-id')
-    return render(request, 'dev.html', {'saves':saves})
+    return render(request, 'dev.html')
