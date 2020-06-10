@@ -1,27 +1,259 @@
 <head>
+
   <!-- CSS only -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
   <!-- JS, Popper.js, and jQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-</head>
-<body>
-<div class="container">
-  
-  <nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
-      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
-      <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
-    </div>
-  </nav>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
 
-  <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
-    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <style type="text/css">
+    .cal_top {
+      text-align: center;
+      font-size: 30px;
+    }
+
+    .cal {
+      text-align: center;
+    }
+
+    table.calendar {
+      border: 1px solid black;
+      display: inline-table;
+      text-align: left;
+    }
+
+    table.calendar td {
+      vertical-align: top;
+      border: 1px solid skyblue;
+      width: 100px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Nav 시작 -->
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+          aria-controls="nav-home" aria-selected="true">Home</a>
+        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+          aria-controls="nav-profile" aria-selected="false">Profile</a>
+        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+          aria-controls="nav-contact" aria-selected="false">Contact</a>
+      </div>
+    </nav>
+
+    <!-- 저장된 글 확인 nav-home -->
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        {% for save in saves.all %}
+        {{ save.save_user }}
+        -
+        {{ save.save_date }}
+        <br>
+        {% endfor %}
+      </div>
+
+      <!-- 달력 가져오기 nav-profile -->
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+        <div class="cal_top">
+          <a href="#" id="movePrevMonth"><span id="prevMonth" class="cal_tit"><svg class="bi bi-arrow-left-short"
+                width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M7.854 4.646a.5.5 0 0 1 0 .708L5.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z" />
+                <path fill-rule="evenodd" d="M4.5 8a.5.5 0 0 1 .5-.5h6.5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z" />
+              </svg></span></a>
+          <span id="cal_top_year"></span>
+          <span id="cal_top_month"></span>
+          <a href="#" id="moveNextMonth"><span id="nextMonth" class="cal_tit"><svg class="bi bi-arrow-right-short"
+                width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M8.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.793 8 8.146 5.354a.5.5 0 0 1 0-.708z" />
+                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5H11a.5.5 0 0 1 0 1H4.5A.5.5 0 0 1 4 8z" />
+              </svg></span></a>
+        </div>
+        <br>
+        <div id="cal_tab" class="cal">
+        </div>
+      </div>
+
+      <!-- 프로필 nav-contact -->
+      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+        <h1>mypage</h1>
+        {{ id }}
+        <br>
+        {% if intro %}
+        {{ intro | linebreaksbr}}
+        <br>
+        {% else %}
+        intro가 없슴
+        {% endif %}
+        <a href="{% url 'profile_update' %}">Profile Update</a>
+
+      </div>
+    </div>
   </div>
-</div>
+  
+  <script type="text/javascript">
+
+    var today = null;
+    var year = null;
+    var month = null;
+    var firstDay = null;
+    var lastDay = null;
+    var $tdDay = null;
+    var $tdSche = null;
+    var jsonData = null;
+
+    $(document).ready(function () {
+      drawCalendar();
+      initDate();
+      drawDays();
+      drawSche();
+      $("#movePrevMonth").on("click", function () { movePrevMonth(); });
+      $("#moveNextMonth").on("click", function () { moveNextMonth(); });
+    });
+
+    //Calendar 그리기
+    function drawCalendar() {
+      var setTableHTML = "";
+      setTableHTML += '<table class="calendar">';
+      setTableHTML += '<tr><th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th></tr>';
+      for (var i = 0; i < 6; i++) {
+        setTableHTML += '<tr height="100">';
+        for (var j = 0; j < 7; j++) {
+          setTableHTML += '<td style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap">';
+          setTableHTML += '    <div class="cal-day"></div>';
+          setTableHTML += '    <div class="cal-schedule"></div>';
+          setTableHTML += '</td>';
+        }
+        setTableHTML += '</tr>';
+      }
+      setTableHTML += '</table>';
+      $("#cal_tab").html(setTableHTML);
+    }
+
+    //날짜 초기화
+    function initDate() {
+      $tdDay = $("td div.cal-day")
+      $tdSche = $("td div.cal-schedule")
+      dayCount = 0;
+      today = new Date();
+      year = today.getFullYear();
+      month = today.getMonth() + 1;
+      if (month < 10) { month = "0" + month; }
+      firstDay = new Date(year, month - 1, 1);
+      lastDay = new Date(year, month, 0);
+    }
+
+    //calendar 날짜표시
+    function drawDays() {
+      $("#cal_top_year").text(year);
+      $("#cal_top_month").text(month);
+      for (var i = firstDay.getDay(); i < firstDay.getDay() + lastDay.getDate(); i++) {
+        $tdDay.eq(i).text(++dayCount);
+      }
+      for (var i = 0; i < 42; i += 7) {
+        $tdDay.eq(i).css("color", "red");
+      }
+      for (var i = 6; i < 42; i += 7) {
+        $tdDay.eq(i).css("color", "blue");
+      }
+    }
+
+    //calendar 월 이동
+    function movePrevMonth() {
+      month--;
+      if (month <= 0) {
+        month = 12;
+        year--;
+      }
+      if (month < 10) {
+        month = String("0" + month);
+      }
+      getNewInfo();
+    }
+
+    function moveNextMonth() {
+      month++;
+      if (month > 12) {
+        month = 1;
+        year++;
+      }
+      if (month < 10) {
+        month = String("0" + month);
+      }
+      getNewInfo();
+    }
+
+    //정보갱신
+    function getNewInfo() {
+      for (var i = 0; i < 42; i++) {
+        $tdDay.eq(i).text("");
+        $tdSche.eq(i).text("");
+      }
+      dayCount = 0;
+      firstDay = new Date(year, month - 1, 1);
+      lastDay = new Date(year, month, 0);
+      drawDays();
+      drawSche();
+    }
+
+    //2019-08-27 추가본
+
+    //데이터 등록
+    function setData() {
+      jsonData =
+      {
+        "2019": {
+          "07": {
+            "17": "제헌절"
+          }
+          , "08": {
+            "7": "칠석"
+            , "15": "광복절"
+            , "23": "처서"
+          }
+          , "09": {
+            "13": "추석"
+            , "23": "추분"
+          }
+        }
+      }
+    }
+
+    //스케줄 그리기
+    function drawSche() {
+      setData();
+      var dateMatch = null;
+      for (var i = firstDay.getDay(); i < firstDay.getDay() + lastDay.getDate(); i++) {
+        var txt = "";
+        txt = jsonData[year];
+        if (txt) {
+          txt = jsonData[year][month];
+          if (txt) {
+            txt = jsonData[year][month][i];
+            dateMatch = firstDay.getDay() + i - 1;
+            $tdSche.eq(dateMatch).text(txt);
+          }
+        }
+      }
+    }
+  </script>
+
 </body>
