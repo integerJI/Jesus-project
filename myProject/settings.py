@@ -144,3 +144,8 @@ LOGIN_REDIRECT_URL = 'index'
 # 로그아웃 후 나올 페이지
 LOGOUT_REDIRECT_URL = 'signin'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'myApp', 'static')
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
