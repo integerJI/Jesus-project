@@ -22,15 +22,15 @@ def calender(request):
 
 # 정수 전용 페이지
 def dev(request):
-    request_user = request.user
-    saves = Save.objects.all().filter(save_user_id=request_user).order_by('-id')
-    request_profile = Profile.objects.get(user=request_user)
+    # request_user = request.user
+    # saves = Save.objects.all().filter(save_user_id=request_user).order_by('-id')
+    # request_profile = Profile.objects.get(user=request_user)
 
-    context = {
-       'id' : request_user.username,
-       'nick' : request_profile.nick,
-       'intro' : request_profile.intro,
-       'saves' : saves,
-    }
-
-    return render(request, 'dev.html', context=context)
+    # context = {
+    #    'id' : request_user.username,
+    #    'nick' : request_profile.nick,
+    #    'intro' : request_profile.intro,
+    #    'saves' : saves,
+    # }
+    return render(request, 'dev.html')
+    # return render(request, 'dev.html', context=context)
